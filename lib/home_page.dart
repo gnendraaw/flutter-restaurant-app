@@ -17,6 +17,9 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 16,
+              ),
               const Text(
                 'Restaurant',
                 style: TextStyle(
@@ -58,13 +61,64 @@ class HomePage extends StatelessWidget {
                       return ListView.builder(
                         itemCount: restaurants.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Image.network(
-                              restaurants[index].pictureId,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: GestureDetector(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          restaurants[index].pictureId,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              restaurants[index].name,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Text(restaurants[index].city,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                )),
+                                            Text(restaurants[index]
+                                                .rating
+                                                .toString()),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              onTap: () {},
                             ),
-                            title: Text(restaurants[index].name),
-                            subtitle:
-                                Text(restaurants[index].rating.toString()),
                           );
                         },
                       );
