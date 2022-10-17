@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/constraints/constraints.dart';
 
 class DetailPage extends StatelessWidget {
   static const routeName = '/detail_page';
@@ -26,7 +27,7 @@ class DetailPage extends StatelessWidget {
           preferredSize: const Size.fromHeight(2),
           child: Container(
             height: 2,
-            color: Colors.grey,
+            color: backgroundOutline,
           ),
         ),
       ),
@@ -46,6 +47,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,47 +66,51 @@ class Body extends StatelessWidget {
     );
   }
 
-  Container drinks() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const Text('Drinks',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-          SizedBox(
-            height: 50,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: restaurant.menus.drinks.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      restaurant.menus.drinks[index].name,
-                      overflow: TextOverflow.ellipsis,
+  Column drinks() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: const Text('Drinks',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+        SizedBox(
+          height: 60,
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: restaurant.menus.drinks.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: backgroundOutline, width: 1),
+                ),
+                child: Container(
+                  width: 120,
+                  height: 60,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    restaurant.menus.drinks[index].name,
+                    overflow: TextOverflow.clip,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -121,7 +127,7 @@ class Body extends StatelessWidget {
               )),
         ),
         SizedBox(
-          height: 50,
+          height: 60,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -130,15 +136,22 @@ class Body extends StatelessWidget {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 2),
+                  color: primaryColor,
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: backgroundOutline, width: 1),
                 ),
                 child: Container(
+                  width: 120,
+                  height: 60,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     restaurant.menus.foods[index].name,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.clip,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               );
@@ -176,24 +189,70 @@ class Body extends StatelessWidget {
 
   Container heading() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(restaurant.city,
-              style: const TextStyle(
-                fontSize: 16,
-              )),
-          Row(children: [
-            const Icon(Icons.star, color: Colors.orange),
-            const SizedBox(
-              width: 6,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: defaultShadow.withOpacity(.5),
+                    blurRadius: 1,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Text('Location',
+                      style: TextStyle(
+                        fontSize: 14,
+                      )),
+                  Text(restaurant.city,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ],
+              ),
             ),
-            Text(restaurant.rating.toString(),
-                style: const TextStyle(
-                  fontSize: 16,
-                )),
-          ]),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: defaultShadow.withOpacity(.5),
+                    blurRadius: 1,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Text('Ratings',
+                      style: TextStyle(
+                        fontSize: 14,
+                      )),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Icon(Icons.star, color: Colors.orange),
+                    Text(restaurant.rating.toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ]),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

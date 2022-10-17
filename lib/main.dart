@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_app/home_page.dart';
 import 'package:restaurant_app/detail_page.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/constraints/constraints.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Restaurant App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(elevation: 0),
+        textTheme: customTextTheme,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: primaryColor,
+              onPrimary: Colors.black,
+              secondary: secondaryColor,
+            ),
       ),
       initialRoute: HomePage.routeName,
       routes: {
