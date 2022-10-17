@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home_page';
@@ -11,7 +11,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,6 +47,28 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(
                 height: 16,
+              ),
+              Expanded(
+                child: FutureBuilder(
+                    future: DefaultAssetBundle.of(context)
+                        .loadString('assets/local_restaurant.json'),
+                    builder: (context, snapshot) {
+                      final List<Restaurant> restaurants =
+                          parseRestaurant(snapshot.data);
+                      return ListView.builder(
+                        itemCount: restaurants.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: Image.network(
+                              restaurants[index].pictureId,
+                            ),
+                            title: Text(restaurants[index].name),
+                            subtitle:
+                                Text(restaurants[index].rating.toString()),
+                          );
+                        },
+                      );
+                    }),
               ),
             ],
           ),
