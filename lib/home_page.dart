@@ -32,42 +32,10 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: defaultShadow.withOpacity(.5),
-                    blurRadius: 1,
-                  ),
-                ],
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: primaryColor,
-                  hintText: 'Looking for something?',
-                  hintStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: fadeTextColor,
-                  ),
-                  suffixIcon: IconTheme(
-                      data: IconThemeData(
-                        color: Colors.black,
-                      ),
-                      child: Icon(Icons.search)),
-                  border: searchBarBorder(),
-                  focusedBorder: searchBarBorder(),
-                  enabledBorder: searchBarBorder(),
-                ),
-              ),
-            ),
             const SizedBox(
               height: 16,
             ),
-            Expanded(
+            const Expanded(
               child: RestaurantList(),
             ),
           ],
@@ -75,16 +43,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-OutlineInputBorder searchBarBorder() {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: const BorderSide(
-      color: primaryColor,
-      width: 0,
-    ),
-  );
 }
 
 class RestaurantList extends StatelessWidget {

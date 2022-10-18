@@ -51,7 +51,10 @@ class Body extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(restaurant.pictureId),
+          Hero(
+            tag: restaurant.id,
+            child: Image.network(restaurant.pictureId),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
