@@ -62,6 +62,7 @@ class Body extends StatelessWidget {
               description(),
               foods(),
               drinks(),
+              const SizedBox(height: 16),
             ],
           ),
         ],
@@ -74,7 +75,7 @@ class Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: const Text('Drinks',
               style: TextStyle(
                 fontSize: 16,
@@ -122,7 +123,7 @@ class Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: const Text('Foods',
               style: TextStyle(
                 fontSize: 16,
