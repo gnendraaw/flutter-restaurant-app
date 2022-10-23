@@ -81,7 +81,7 @@ class RestaurantDetailPage extends StatelessWidget {
                     Text(restaurant.name,
                         style: const TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.bold,
                         )),
                     Row(
                       children: [
@@ -140,22 +140,101 @@ class RestaurantDetailPage extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       fontSize: 14,
                     )),
-                const SizedBox(height: 32),
-                const Text(
-                  'Description',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(restaurant.description,
-                    maxLines: 5,
-                    style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 14,
-                    )),
               ],
             ),
           ),
+          const SizedBox(height: 32),
+          _buildRestaurantPartTitle('Foods'),
+          _buildMenuList(restaurant.menus.foods),
+          const SizedBox(height: 32),
+          _buildRestaurantPartTitle('Drinks'),
+          _buildMenuList(restaurant.menus.drinks),
+          const SizedBox(height: 32),
+          _buildRestaurantPartTitle('Reviews'),
+          SizedBox(
+              height: 130,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: restaurant.customerReviews.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 32,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 1,
+                            color: defaultShadow.withOpacity(0.5),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            restaurant.customerReviews[index].review,
+                            maxLines: 3,
+                            overflow: TextOverflow.fade,
+                          ),
+                          Text("- ${restaurant.customerReviews[index].name}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              )),
+          const SizedBox(height: 32),
         ],
       ),
     );
   }
+}
+
+Widget _buildRestaurantPartTitle(String title) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: Text(
+      title,
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+Widget _buildMenuList(var items) {
+  return SizedBox(
+      height: 32,
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(Icons.restaurant),
+                const SizedBox(width: 8),
+                Text(items[index].name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ))
+              ],
+            ),
+          );
+        },
+      ));
 }
