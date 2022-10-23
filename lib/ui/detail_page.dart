@@ -55,6 +55,7 @@ class RestaurantDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -128,6 +129,28 @@ class RestaurantDetailPage extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 32),
+                const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(restaurant.description,
+                    maxLines: 5,
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 14,
+                    )),
+                const SizedBox(height: 32),
+                const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(restaurant.description,
+                    maxLines: 5,
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 14,
+                    )),
               ],
             ),
           ),
