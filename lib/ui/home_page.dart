@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/detail_page.dart';
-import 'package:restaurant_app/constraints/constraints.dart';
+import 'package:restaurant_app/ui/detail_page.dart';
+import 'package:restaurant_app/common/style.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home_page';
