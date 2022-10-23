@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         textTheme: customTextTheme,
         colorScheme: Theme.of(context).colorScheme.copyWith(
               primary: primaryColor,
-              onPrimary: Colors.black,
+              onPrimary: secondaryColor,
               secondary: secondaryColor,
             ),
       ),
