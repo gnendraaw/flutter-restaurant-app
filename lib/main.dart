@@ -43,7 +43,9 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
-        HomePage.routeName: (context) => HomePage(),
+        HomePage.routeName: (context) => const HomePage(),
+        DetailPage.routeName: (context) => DetailPage(
+            id: ModalRoute.of(context)?.settings.arguments as String),
       },
     );
   }

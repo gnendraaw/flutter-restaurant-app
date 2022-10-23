@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/style.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/ui/detail_page.dart';
 
 class RestaurantListPage extends StatelessWidget {
   const RestaurantListPage({Key? key}) : super(key: key);
@@ -13,7 +13,8 @@ class RestaurantListPage extends StatelessWidget {
     return Consumer<RestaurantsProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.loading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(color: secondaryColor));
         } else if (state.state == ResultState.hasData) {
           return ListView.builder(
             shrinkWrap: true,
@@ -43,7 +44,10 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, DetailPage.routeName,
+            arguments: restaurant.id);
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
@@ -60,7 +64,7 @@ class RestaurantCard extends StatelessWidget {
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               child: Image.network(
-                'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
                 width: 100,
                 height: 100,
                 fit: BoxFit.fitHeight,
