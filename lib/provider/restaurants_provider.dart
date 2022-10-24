@@ -38,7 +38,7 @@ class RestaurantsProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Oops! something went wrong';
+      return _message = 'Oops! something went wrong, try again later';
     }
   }
 }

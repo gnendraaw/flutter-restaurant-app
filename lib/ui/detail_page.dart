@@ -36,6 +36,11 @@ class DetailPage extends StatelessWidget {
             } else if (state.state == ResultState.hasData) {
               var restaurant = state.restaurantList.restaurant;
               return RestaurantDetailPage(restaurant: restaurant);
+            } else if (state.state == ResultState.noData) {
+              return const Center(child: Text('We found nothing..'));
+            } else if (state.state == ResultState.error) {
+              return const Center(
+                  child: Text('Oops! something went wrong, try again later'));
             } else {
               return const Center(child: Text(''));
             }
