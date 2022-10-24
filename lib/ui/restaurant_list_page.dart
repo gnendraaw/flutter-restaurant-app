@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/style.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/widgets/restaurant_card.dart';
 
 class RestaurantListPage extends StatelessWidget {
@@ -26,11 +24,18 @@ class RestaurantListPage extends StatelessWidget {
               return RestaurantCard(restaurant: restaurant);
             },
           );
+        } else if (state.state == ResultState.noData) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else if (state.state == ResultState.error) {
+          return Center(
+            child: Text(state.message),
+          );
         } else {
           return const Center(
-              child: Material(
             child: Text(''),
-          ));
+          );
         }
       },
     );

@@ -29,7 +29,7 @@ class RestaurantsProvider extends ChangeNotifier {
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
-        return _message = 'Empty Data';
+        return _message = 'Nothing found';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
@@ -38,7 +38,7 @@ class RestaurantsProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();
-      return _message = 'Error => $e';
+      return _message = 'Oops! something went wrong';
     }
   }
 }

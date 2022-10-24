@@ -6,12 +6,16 @@ import 'package:restaurant_app/widgets/restaurant_search_card.dart';
 import 'package:restaurant_app/provider/restaurant_search_provider.dart';
 
 class SearchPage extends SearchDelegate {
+  dynamic result;
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
         icon: const Icon(Icons.close),
-        onPressed: () {},
+        onPressed: () {
+          query = '';
+        },
       ),
     ];
   }
@@ -20,12 +24,20 @@ class SearchPage extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
-      onPressed: () {},
+      onPressed: () {
+        close(
+          context,
+          result,
+        );
+      },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
+    if (query.isEmpty) {
+      return const Center(child: Text("Let's find something!"));
+    }
     return ChangeNotifierProvider<RestaurantSearchProvider>(
       create: (_) =>
           RestaurantSearchProvider(apiService: ApiService(), query: query),
@@ -33,25 +45,21 @@ class SearchPage extends SearchDelegate {
         builder: (context, state, _) {
           if (state.state == ResultState.loading) {
             return const Center(
-                child: CircularProgressIndicator(
-              color: secondaryColor,
-            ));
+                child: CircularProgressIndicator(color: secondaryColor));
+          } else if (state.state == ResultState.noData) {
+            return Center(child: Text(state.message));
           } else if (state.state == ResultState.hasData) {
-            if (state.restaurantResult.founded <= 0) {
-              return const Center(
-                  child: Text('Nothing found, try another keyword'));
-            }
-
-            final restaurants = state.restaurantResult.restaurants;
             return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: restaurants.length,
+              itemCount: state.restaurantResult.restaurants.length,
               itemBuilder: (context, index) {
-                return RestaurantCard(restaurant: restaurants[index]);
+                var restaurant = state.restaurantResult.restaurants[index];
+                return RestaurantCard(restaurant: restaurant);
               },
             );
+          } else if (state.state == ResultState.error) {
+            return Center(child: Text(state.message));
           } else {
-            return const Center(child: Text('Oops! something went wrong'));
+            return const Center();
           }
         },
       ),
@@ -60,6 +68,6 @@ class SearchPage extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return const Center(child: Text('Lets find something'));
+    return const Center(child: Text("Let's find something"));
   }
 }
