@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/style.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_search.dart';
 import 'package:restaurant_app/widgets/restaurant_search_card.dart';
+import 'package:restaurant_app/provider/restaurant_search_provider.dart';
 
 class SearchPage extends SearchDelegate {
   dynamic result;
@@ -35,7 +37,33 @@ class SearchPage extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return _buildSearchList();
+    return ChangeNotifierProvider<RestaurantSearchProvider>(
+      create: (_) =>
+          RestaurantSearchProvider(apiService: ApiService(), query: query),
+      child: Consumer<RestaurantSearchProvider>(
+        builder: (context, state, _) {
+          if (state.state == ResultState.loading) {
+            return const Center(
+                child: CircularProgressIndicator(color: secondaryColor));
+          } else if (state.state == ResultState.noData) {
+            return const Center(
+                child: Text('Nothing found, try another keyword'));
+          } else if (state.state == ResultState.hasData) {
+            final restaurants = state.restaurantResult.restaurants;
+            return ListView.builder(
+              itemCount: restaurants.length,
+              itemBuilder: (context, index) {
+                return RestaurantCard(restaurant: restaurants[index]);
+              },
+            );
+          } else if (state.state == ResultState.error) {
+            return const Center(child: Text('Something went wrong'));
+          } else {
+            return const Center();
+          }
+        },
+      ),
+    );
   }
 
   @override
