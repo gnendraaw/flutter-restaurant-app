@@ -43,11 +43,15 @@ class RestaurantDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(restaurant.name,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  )),
+              Expanded(
+                child: Text(restaurant.name,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+              ),
               _buildRestaurantRatings(),
             ],
           ),
@@ -56,7 +60,7 @@ class RestaurantDetailPage extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 color: secondaryTextColor,
-                overflow: TextOverflow.fade,
+                overflow: TextOverflow.ellipsis,
               )),
           const SizedBox(height: 8),
           SizedBox(
@@ -87,13 +91,17 @@ class RestaurantDetailPage extends StatelessWidget {
           const SizedBox(height: 32),
           const Text(
             'Description',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           Text(restaurant.description,
               maxLines: 5,
               style: const TextStyle(
-                overflow: TextOverflow.ellipsis,
                 fontSize: 14,
+                overflow: TextOverflow.ellipsis,
               )),
         ],
       ),
@@ -104,7 +112,7 @@ class RestaurantDetailPage extends StatelessWidget {
     return Row(
       children: [
         const Icon(Icons.star, color: Colors.orange),
-        const SizedBox(width: 8),
+        const SizedBox(width: 4),
         Text(restaurant.rating.toString(),
             style: const TextStyle(
               fontSize: 14,
