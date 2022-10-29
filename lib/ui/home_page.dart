@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:restaurant_app/common/style.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
+import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/ui/restaurant_list_page.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:restaurant_app/ui/settings_page.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/restaurant_list';
@@ -24,10 +27,16 @@ class _HomePageState extends State<HomePage> {
   var isDeviceConnected = false;
   bool isAlertSet = false;
 
+  int _bottomNavIndex = 0;
+
+  final NotificationHelper _notificationHelper = NotificationHelper();
+
   @override
   void initState() {
     super.initState();
     getConnectivity();
+    _notificationHelper
+        .configureSelectNotificationSubject(DetailPage.routeName);
   }
 
   getConnectivity() => subscription = Connectivity()
@@ -68,9 +77,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  final List<Widget> _listWidget = [
+    const RestaurantListPage(),
+    const SettingsPage(),
+  ];
+
+  final List<BottomNavigationBarItem> _bottomNavBarItem = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.restaurant),
+      label: 'Restaurants',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.settings),
+      label: 'Settings',
+    ),
+  ];
+
+  void _onBottomNavTapped(int index) {
+    setState(() {
+      _bottomNavIndex = index;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
+    selectNotificationSubject.close();
     subscription.cancel();
   }
 
@@ -93,9 +125,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ChangeNotifierProvider<RestaurantsProvider>(
-        create: (_) => RestaurantsProvider(apiService: ApiService()),
-        child: const RestaurantListPage(),
+      body: _listWidget[_bottomNavIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: _bottomNavBarItem,
+        selectedItemColor: secondaryColor,
+        currentIndex: _bottomNavIndex,
+        onTap: _onBottomNavTapped,
       ),
     );
   }

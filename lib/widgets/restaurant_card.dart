@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/common/style.dart';
@@ -11,10 +12,8 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName,
-            arguments: restaurant.id);
-      },
+      onTap: () =>
+          Navigation.intentWithData(DetailPage.routeName, restaurant.id),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(

@@ -19,6 +19,13 @@ class RestaurantResult {
         restaurants: List<Restaurant>.from(
             (json["restaurants"] as List).map((x) => Restaurant.fromJson(x))),
       );
+
+  Map<String, dynamic> toJson(String json) => {
+        "error": error,
+        "message": message,
+        "count": count,
+        "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson()))
+      };
 }
 
 class Restaurant {
