@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/favorite_provider.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/widgets/restaurant_card.dart';
 
 class FavoritePage extends StatelessWidget {
@@ -18,12 +17,6 @@ class FavoritePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: Consumer<FavoriteProvider>(
         builder: (context, provider, child) {

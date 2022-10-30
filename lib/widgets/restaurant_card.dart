@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/provider/favorite_provider.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/common/style.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
@@ -14,7 +14,8 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigation.intentWithData(DetailPage.routeName, restaurant),
+      onTap: () =>
+          Navigation.intentWithData(DetailPage.routeName, restaurant.id),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
