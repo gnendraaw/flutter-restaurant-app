@@ -1,9 +1,8 @@
-import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:rxdart/rxdart.dart';
 
 final selectNotificationSubject = BehaviorSubject<String>();
@@ -60,7 +59,7 @@ class NotificationHelper {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    var restaurantResult = await ApiService().restaurantList();
+    var restaurantResult = await ApiService().restaurantList(http.Client());
     var restaurantList = restaurantResult.restaurants.toList();
     var randomRestaurantIndex = Random().nextInt(restaurantList.length);
     var restaurantId = restaurantList[randomRestaurantIndex].id;
