@@ -14,8 +14,7 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Navigation.intentWithData(DetailPage.routeName, restaurant.id),
+      onTap: () => Navigation.intentWithData(DetailPage.routeName, restaurant),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(

@@ -18,6 +18,7 @@ import 'package:restaurant_app/utils/notification_helper.dart';
 import 'package:restaurant_app/utils/preferences_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -89,7 +90,9 @@ class MyApp extends StatelessWidget {
           SplashScreen.routeName: (context) => const SplashScreen(),
           HomePage.routeName: (context) => const HomePage(),
           DetailPage.routeName: (context) => DetailPage(
-              id: ModalRoute.of(context)?.settings.arguments as String),
+                restaurant:
+                    ModalRoute.of(context)?.settings.arguments as Restaurant,
+              ),
         },
       ),
     );
