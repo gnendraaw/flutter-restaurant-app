@@ -5,6 +5,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:restaurant_app/common/style.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
+import 'package:restaurant_app/ui/favorite_page.dart';
 import 'package:restaurant_app/ui/restaurant_list_page.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/ui/search_page.dart';
@@ -79,6 +80,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _listWidget = [
     const RestaurantListPage(),
+    const FavoritePage(),
     const SettingsPage(),
   ];
 
@@ -86,6 +88,10 @@ class _HomePageState extends State<HomePage> {
     const BottomNavigationBarItem(
       icon: Icon(Icons.restaurant),
       label: 'Restaurants',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.favorite),
+      label: 'Favorite',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.settings),
