@@ -10,8 +10,7 @@ class SettingsPage extends StatelessWidget {
 
   const SettingsPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -45,5 +44,10 @@ class SettingsPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildAndroid(context);
   }
 }

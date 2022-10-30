@@ -83,11 +83,11 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItem = [
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.restaurant),
       label: 'Restaurants',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Settings',
     ),
@@ -109,22 +109,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurantss'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              if (isDeviceConnected) {
-                showSearch(
-                  context: context,
-                  delegate: SearchPage(),
-                );
-              }
-            },
-          ),
-        ],
-      ),
       body: _listWidget[_bottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarItem,
