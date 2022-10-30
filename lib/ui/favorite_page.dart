@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/provider/favorite_provider.dart';
+import 'package:restaurant_app/provider/restaurants_provider.dart';
+import 'package:restaurant_app/widgets/restaurant_card.dart';
 
 class FavoritePage extends StatelessWidget {
   static const routeName = '/favorite';
@@ -21,6 +24,16 @@ class FavoritePage extends StatelessWidget {
             icon: const Icon(Icons.search),
           ),
         ],
+      ),
+      body: Consumer<FavoriteProvider>(
+        builder: (context, provider, child) {
+          return ListView.builder(
+            itemCount: provider.favorites.length,
+            itemBuilder: (context, index) {
+              return RestaurantCard(restaurant: provider.favorites[index]);
+            },
+          );
+        },
       ),
     );
   }

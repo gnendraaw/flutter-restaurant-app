@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/db/database_helper.dart';
+import 'package:restaurant_app/provider/favorite_provider.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/provider/scheduling_provider.dart';
 import 'package:restaurant_app/ui/home_page.dart';
@@ -48,9 +50,13 @@ class MyApp extends StatelessWidget {
           create: (_) => RestaurantsProvider(apiService: ApiService()),
         ),
         ChangeNotifierProvider<SchedulingProvider>(
-            create: (_) => SchedulingProvider(
-                preferencesHelper: PreferencesHelper(
-                    sharedPreferences: SharedPreferences.getInstance()))),
+          create: (_) => SchedulingProvider(
+              preferencesHelper: PreferencesHelper(
+                  sharedPreferences: SharedPreferences.getInstance())),
+        ),
+        ChangeNotifierProvider<FavoriteProvider>(
+          create: (_) => FavoriteProvider(databaseHelper: DatabaseHelper()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

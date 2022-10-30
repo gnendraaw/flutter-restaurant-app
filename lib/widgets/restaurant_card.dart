@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/provider/favorite_provider.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/common/style.dart';
 
@@ -69,6 +71,29 @@ class RestaurantCard extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Consumer<FavoriteProvider>(
+              builder: (context, provider, child) {
+                return FutureBuilder(
+                  future: provider.isFavorited(restaurant.id),
+                  builder: (context, snapshot) {
+                    var isFavorited = snapshot.data ?? false;
+                    return isFavorited
+                        ? IconButton(
+                            onPressed: () {
+                              provider.removeFavorite(restaurant.id);
+                            },
+                            icon: const Icon(Icons.favorite),
+                          )
+                        : IconButton(
+                            onPressed: () {
+                              provider.addFavorite(restaurant);
+                            },
+                            icon: const Icon(Icons.favorite_border),
+                          );
+                  },
+                );
+              },
             ),
           ],
         ),
