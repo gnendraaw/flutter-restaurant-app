@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/model/restaurant_search.dart';
+import 'package:restaurant_app/provider/favorite_provider.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/common/style.dart';
 
@@ -11,10 +14,8 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName,
-            arguments: restaurant.id);
-      },
+      onTap: () =>
+          Navigation.intentWithData(DetailPage.routeName, restaurant.id),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
@@ -28,19 +29,23 @@ class RestaurantCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                child: Image.network(
-                  'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
             Expanded(
+              flex: 2,
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Image.network(
+                    'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/default-food-img.png');
+                    },
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fitHeight,
+                  )),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              flex: 4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,6 +76,21 @@ class RestaurantCard extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Flexible(
+              child: Consumer<FavoriteProvider>(
+                builder: (context, provider, child) {
+                  return FutureBuilder(
+                    future: provider.isFavorited(restaurant.id),
+                    builder: (context, snapshot) {
+                      var isFavorited = snapshot.data ?? false;
+                      return isFavorited
+                          ? const Icon(Icons.favorite)
+                          : Container();
+                    },
+                  );
+                },
               ),
             ),
           ],

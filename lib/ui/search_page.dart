@@ -51,6 +51,7 @@ class SearchPage extends SearchDelegate {
           } else if (state.state == ResultState.hasData) {
             final restaurants = state.restaurantResult.restaurants;
             return ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: restaurants.length,
               itemBuilder: (context, index) {
                 return RestaurantCard(restaurant: restaurants[index]);

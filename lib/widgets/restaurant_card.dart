@@ -27,10 +27,10 @@ class RestaurantCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
+            Expanded(
+              flex: 2,
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   child: Image.network(
@@ -43,8 +43,9 @@ class RestaurantCard extends StatelessWidget {
                     fit: BoxFit.fitHeight,
                   )),
             ),
+            const SizedBox(width: 24),
             Expanded(
-              flex: 2,
+              flex: 4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
