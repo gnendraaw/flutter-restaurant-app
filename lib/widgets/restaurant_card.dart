@@ -27,6 +27,7 @@ class RestaurantCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Flexible(
@@ -42,8 +43,8 @@ class RestaurantCard extends StatelessWidget {
                     fit: BoxFit.fitHeight,
                   )),
             ),
-            const SizedBox(width: 16),
             Expanded(
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,28 +77,30 @@ class RestaurantCard extends StatelessWidget {
                 ],
               ),
             ),
-            Consumer<FavoriteProvider>(
-              builder: (context, provider, child) {
-                return FutureBuilder(
-                  future: provider.isFavorited(restaurant.id),
-                  builder: (context, snapshot) {
-                    var isFavorited = snapshot.data ?? false;
-                    return isFavorited
-                        ? IconButton(
-                            onPressed: () {
-                              provider.removeFavorite(restaurant.id);
-                            },
-                            icon: const Icon(Icons.favorite),
-                          )
-                        : IconButton(
-                            onPressed: () {
-                              provider.addFavorite(restaurant);
-                            },
-                            icon: const Icon(Icons.favorite_border),
-                          );
-                  },
-                );
-              },
+            Flexible(
+              child: Consumer<FavoriteProvider>(
+                builder: (context, provider, child) {
+                  return FutureBuilder(
+                    future: provider.isFavorited(restaurant.id),
+                    builder: (context, snapshot) {
+                      var isFavorited = snapshot.data ?? false;
+                      return isFavorited
+                          ? IconButton(
+                              onPressed: () {
+                                provider.removeFavorite(restaurant.id);
+                              },
+                              icon: const Icon(Icons.favorite),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                provider.addFavorite(restaurant);
+                              },
+                              icon: const Icon(Icons.favorite_border),
+                            );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
