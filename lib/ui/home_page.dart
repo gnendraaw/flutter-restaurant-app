@@ -30,10 +30,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
     getConnectivity();
     _notificationHelper
         .configureSelectNotificationSubject(DetailPage.routeName);
+    super.initState();
   }
 
   getConnectivity() => subscription = Connectivity()
@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   showDialogBox() {
     return showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('No connection'),
         content: const Text('please check your internet connectivity'),
